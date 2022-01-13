@@ -64,10 +64,10 @@ public class PopulationDataSource{
         }
     }
 
-    public String findPopulationByCityAndYear(String country, Integer year){
+    public String findPopulationByCityAndYear(String city, Integer year){
        List<PopulationRow> resultList = populationsData
                 .stream()
-                .filter(dataRow -> dataRow.getCountry().equals(country) && dataRow.getYear().equals(year))
+                .filter(dataRow -> dataRow.getCity().equals(city) && dataRow.getYear().equals(year))
                 .collect(Collectors.toList());
 
        if(resultList.isEmpty()){
