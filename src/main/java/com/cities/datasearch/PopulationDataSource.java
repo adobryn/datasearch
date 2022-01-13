@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import com.opencsv.exceptions.CsvException;
 @Component
 public class PopulationDataSource{
     String testData;
+    List<PopulationRow> populationsData;
 
     PopulationDataSource(){
         loadData();
@@ -26,12 +28,31 @@ public class PopulationDataSource{
 
     public void loadData() {
         try {
+            //open populations data set and initialize csv reader
             File initialFile = new File("src/main/resources/datasources/populations.csv");
             InputStream fileStream = new FileInputStream(initialFile);
-            CSVParser parser = new CSVParserBuilder().withSeparator(',').build();
-            CSVReader reader = new CSVReaderBuilder(new InputStreamReader(fileStream)).withCSVParser(parser).build();
-            List<String[]> r = reader.readAll();
-            testData = Arrays.toString(r.get(0));
+
+            CSVParser parser = new CSVParserBuilder().withSeparator(',')
+                    .build();
+
+            CSVReader reader = new CSVReaderBuilder(new InputStreamReader(fileStream))
+                    .withCSVParser(parser)
+                    .build();
+
+            //skip header row
+            reader.readNext();
+
+            String[] values = null;
+            //iterate through data file
+            populationsData = new ArrayList<>();
+            while ((values = reader.readNext()) != null){
+
+                //parse the rows
+                populationsData.add(new PopulationRow(values));
+            }
+
+            testData = populationsData.get(0).getCountry();
+
         }
         catch (IOException | CsvException e) {
             e.printStackTrace();

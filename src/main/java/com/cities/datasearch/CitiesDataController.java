@@ -21,7 +21,7 @@ public class CitiesDataController {
     }
 
     @GetMapping("citiesData/search/v1/population")
-    public Population GetPopulation(){
-        return new Population();
+    public String GetPopulation(){
+        return "12345";
     }
 }
