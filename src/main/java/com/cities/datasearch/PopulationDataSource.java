@@ -54,11 +54,12 @@ public class PopulationDataSource{
             //iterate through data file until foot notes section
             while ((values = reader.readNext()) != null && !values[0].contains("footnoteSeqID")){
                 //parse the rows
-                logger.info(Arrays.toString(values));
                 populationsData.add(new PopulationRow(values));
             }
+            logger.info("Parsing finished successfully");
         }
         catch (IOException | CsvException e) {
+            logger.error("Could not parse file due " + e.getCause());
             e.printStackTrace();
         }
     }
