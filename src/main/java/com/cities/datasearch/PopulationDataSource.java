@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,6 @@ import com.opencsv.exceptions.CsvException;
 
 @Component
 public class PopulationDataSource{
-    String testData;
     List<PopulationRow> populationsData;
 
     Logger logger = LoggerFactory.getLogger(PopulationDataSource.class);
@@ -33,8 +33,8 @@ public class PopulationDataSource{
     public void loadData() {
         try {
             //open populations data set and initialize csv reader
-
             logger.info("Opening file...");
+
             File initialFile = new File("src/main/resources/datasources/populations.csv");
             InputStream fileStream = new FileInputStream(initialFile);
 
@@ -57,12 +57,22 @@ public class PopulationDataSource{
                 logger.info(Arrays.toString(values));
                 populationsData.add(new PopulationRow(values));
             }
-
-            testData = populationsData.get(0).getCountry();
-
         }
         catch (IOException | CsvException e) {
             e.printStackTrace();
         }
+    }
+
+    public String findPopulationByCityAndYear(String country, Integer year){
+       List<PopulationRow> resultList = populationsData
+                .stream()
+                .filter(dataRow -> dataRow.getCountry().equals(country) && dataRow.getYear().equals(year))
+                .collect(Collectors.toList());
+
+       if(resultList.isEmpty()){
+           return "No entry found by given criteria";
+       }
+
+       return resultList.get(0).getValue();
     }
 }
