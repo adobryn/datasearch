@@ -18,7 +18,7 @@ public class CitiesDataController {
     }
 
     @PostMapping("citiesData/search/v1/population")
-    public String GetPopulation(@RequestParam(value = "city") String city){
-        return dataSource.findPopulationByCityAndYear(city, 2007);
+    public String GetPopulation(@RequestParam(value = "city") String city, @RequestParam(value = "year") Integer year){
+        return dataSource.findPopulationByCityAndYear(city, year);
     }
 }
