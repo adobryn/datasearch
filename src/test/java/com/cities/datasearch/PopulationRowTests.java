@@ -17,6 +17,7 @@ public class PopulationRowTests {
 
         assertEquals(testRow.getCountry(), "Åland Islands");
         assertEquals(testRow.getYear(), 2013);
+        assertEquals(testRow.getCity(), "MARIEHAMN");
         assertEquals(testRow.getValue(), "11370");
     }
 }

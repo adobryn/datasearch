@@ -10,6 +10,17 @@ package com.cities.datasearch;
  */
 public class PopulationRow {
 
+    private Integer year;
+    private String area;
+    private String sexes;
+    private String city;
+    private String cityType;
+    private String recordType;
+    private String reliability;
+    private Integer sourceYear;
+    private String value;
+    private String footNotes;
+
     public String getCountry() {
         return country;
     }
@@ -24,16 +35,9 @@ public class PopulationRow {
         return value;
     }
 
-    private Integer year;
-    private String area;
-    private String sexes;
-    private String city;
-    private String cityType;
-    private String recordType;
-    private String reliability;
-    private Integer sourceYear;
-    private String value;
-    private String footNotes;
+    public String getCity() {
+        return city;
+    }
 
     PopulationRow(){
         year = 1900;
@@ -52,6 +56,7 @@ public class PopulationRow {
         new PopulationRow();
         country = dataRow[0];
         year = Integer.valueOf(dataRow[1]);
+        city = dataRow[4];
         value = dataRow[9];
     }
 
