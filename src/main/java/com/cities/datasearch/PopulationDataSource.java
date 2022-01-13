@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,5 +76,19 @@ public class PopulationDataSource{
        }
 
        return resultList.get(0).getValue();
+    }
+
+    public String findPopulationByCity(String city){
+        List<PopulationRow> resultList = populationsData
+                .stream()
+                .filter(dataRow -> dataRow.getCity().equals(city))
+                .sorted(Comparator.comparing(PopulationRow::getYear))
+                .collect(Collectors.toList());
+
+        if(resultList.isEmpty()){
+            return "No entry found by given criteria";
+        }
+
+        return resultList.get(0).getValue();
     }
 }
