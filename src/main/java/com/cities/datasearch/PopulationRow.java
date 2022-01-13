@@ -15,6 +15,15 @@ public class PopulationRow {
     }
 
     private String country;
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
     private Integer year;
     private String area;
     private String sexes;
@@ -23,13 +32,27 @@ public class PopulationRow {
     private String recordType;
     private String reliability;
     private Integer sourceYear;
-    private Long value;
+    private String value;
     private String footNotes;
 
+    PopulationRow(){
+        year = 1900;
+        area = "";
+        sexes = "";
+        city = "";
+        cityType = "";
+        recordType = "";
+        reliability = "";
+        sourceYear = 1900;
+        value = "";
+        footNotes = "";
+    }
+
     PopulationRow(String[] dataRow){
+        new PopulationRow();
         country = dataRow[0];
-        year = 1;
-        value = 2147483648L;
+        year = Integer.valueOf(dataRow[1]);
+        value = dataRow[9];
     }
 
 }

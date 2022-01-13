@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.opencsv.CSVParser;
@@ -22,6 +24,8 @@ public class PopulationDataSource{
     String testData;
     List<PopulationRow> populationsData;
 
+    Logger logger = LoggerFactory.getLogger(PopulationDataSource.class);
+
     PopulationDataSource(){
         loadData();
     }
@@ -29,6 +33,8 @@ public class PopulationDataSource{
     public void loadData() {
         try {
             //open populations data set and initialize csv reader
+
+            logger.info("Opening file...");
             File initialFile = new File("src/main/resources/datasources/populations.csv");
             InputStream fileStream = new FileInputStream(initialFile);
 
@@ -43,11 +49,12 @@ public class PopulationDataSource{
             reader.readNext();
 
             String[] values = null;
-            //iterate through data file
             populationsData = new ArrayList<>();
-            while ((values = reader.readNext()) != null){
 
+            //iterate through data file until foot notes section
+            while ((values = reader.readNext()) != null && !values[0].contains("footnoteSeqID")){
                 //parse the rows
+                logger.info(Arrays.toString(values));
                 populationsData.add(new PopulationRow(values));
             }
 
